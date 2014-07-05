@@ -1,0 +1,14 @@
+Line 209: Class RichTextLib.RichTextBox of control rtbHistory was not a loaded control class.
+Line 268: Class RichTextLib.RichTextBox of control rtbChat was not a loaded control class.
+Line 215: The property name _ExtentX in rtbHistory is invalid.
+Line 216: The property name _ExtentY in rtbHistory is invalid.
+Line 217: The property name _Version in rtbHistory is invalid.
+Line 221: The property name ReadOnly in rtbHistory is invalid.
+Line 222: The property name ScrollBars in rtbHistory is invalid.
+Line 224: The property name TextRTF in rtbHistory is invalid.
+Line 274: The property name _ExtentX in rtbChat is invalid.
+Line 275: The property name _ExtentY in rtbChat is invalid.
+Line 276: The property name _Version in rtbChat is invalid.
+Line 279: The property name ReadOnly in rtbChat is invalid.
+Line 280: The property name ScrollBars in rtbChat is invalid.
+Line 281: The property name TextRTF in rtbChat is invalid.

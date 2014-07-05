@@ -1,0 +1,199 @@
+[Root]
+Most Recent Package=chess client
+
+
+[Package|Standard Setup Package 1|Root]
+SubWizProgID=PDWizard.SetupPkgSubWiz
+BuildFolder=C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\CLIENT\Package
+
+[Package|Standard Setup Package 1|Configure DAO ISAMs]
+Applicable=No
+
+[Package|Standard Setup Package 1|Configure DAO ODBC]
+JetWorkspace=
+ODBCDirect=
+
+[Package|Standard Setup Package 1|Files Found]
+
+[Package|Standard Setup Package 1|Files Released]
+
+[Package|Standard Setup Package 1|Missing Dependency Information]
+
+[Package|Standard Setup Package 1|Out-of-Date Dependency Information]
+C:\WINDOWS\system32\Mswinsck.ocx=
+
+[Package|Standard Setup Package 1|Files Added]
+
+[Package|Standard Setup Package 1|Files Removed]
+
+[Package|Standard Setup Package 1|Files In Project]
+C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\CLIENT\CHESS_CLIENT.exe=Yes
+C:\WINDOWS\system32\msvbvm60.dll=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=Yes
+C:\WINDOWS\system32\Mswinsck.ocx=Yes
+C:\WINDOWS\system32\RICHTX32.OCX=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\RICHED32.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=Yes
+C:\WINDOWS\system32\VB6STKIT.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=Yes
+
+[Package|Standard Setup Package 1|Configure Registry Files]
+Applicable=No
+
+[Package|Standard Setup Package 1|Configure Remote Servers]
+Applicable=No
+
+[Package|Standard Setup Package 1|Install Locations]
+C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\CLIENT\CHESS_CLIENT.exe=$(AppPath)
+C:\WINDOWS\system32\msvbvm60.dll=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\system32\Mswinsck.ocx=$(WinSysPath)
+C:\WINDOWS\system32\RICHTX32.OCX=$(WinSysPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\RICHED32.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=$(AppPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=$(WinPath)
+C:\WINDOWS\system32\VB6STKIT.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=$(WinPath)
+
+[Package|Standard Setup Package 1|Configure Shared Files]
+Applicable=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\CLIENT\CHESS_CLIENT.exe=No
+
+[Package|Standard Setup Package 1|Distribution]
+Type=single
+Size=
+Title=CHESS_CLIENT
+
+[Package|Standard Setup Package 1|IconGroups]
+Group0=CHESS_CLIENT
+PrivateGroup0=-1
+Parent0=$(Programs)
+
+[Package|Standard Setup Package 1|CHESS_CLIENT]
+Icon1=CHESS_CLIENT.exe
+Title1=CHESS_CLIENT
+StartIn1=$(AppPath)
+Key1=Icon1
+
+[Package|Standard Setup Package 1|Package]
+PackageFolder=C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\CLIENT\Package
+ProjectFolder=C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\CLIENT
+ServerSideCab=
+File1=C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\CLIENT\Package\setup.exe
+File2=C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\CLIENT\Package\Setup.Lst
+File3=C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\CLIENT\Package\CHESS_CLIENT.CAB
+Handler1=PDWizard.FolderDplySubWiz
+Handler2=PDWizard.WebPostDplySubWiz
+
+
+[Package|chess client|Root]
+SubWizProgID=PDWizard.SetupPkgSubWiz
+BuildFolder=C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\Client v2\Package
+
+[Package|chess client|Configure DAO ISAMs]
+Applicable=No
+
+[Package|chess client|Configure DAO ODBC]
+JetWorkspace=
+ODBCDirect=
+
+[Package|chess client|Files Found]
+
+[Package|chess client|Files Released]
+
+[Package|chess client|Missing Dependency Information]
+
+[Package|chess client|Out-of-Date Dependency Information]
+C:\WINDOWS\system32\Mswinsck.ocx=
+C:\WINDOWS\system32\scrrun.dll=
+
+[Package|chess client|Files Added]
+c:\program files\microsoft visual studio\vb98\vbprojects\ѓъмъщ\client v2\settings.dat=
+
+[Package|chess client|Files Removed]
+
+[Package|chess client|Files In Project]
+C:\WINDOWS\system32\msvbvm60.dll=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=Yes
+C:\WINDOWS\system32\Mswinsck.ocx=Yes
+C:\WINDOWS\system32\RICHTX32.OCX=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\RICHED32.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=Yes
+C:\WINDOWS\system32\VB6STKIT.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\Client v2\CHESS_CLIENT.exe=Yes
+C:\WINDOWS\system32\scrrun.dll=Yes
+C:\WINDOWS\system32\msvcrt.dll=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\Client v2\settings.dat=Yes
+
+[Package|chess client|Configure Registry Files]
+Applicable=No
+
+[Package|chess client|Configure Remote Servers]
+Applicable=No
+
+[Package|chess client|Install Locations]
+C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\CLIENT\CHESS_CLIENT.exe=$(AppPath)
+C:\WINDOWS\system32\msvbvm60.dll=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\system32\Mswinsck.ocx=$(WinSysPath)
+C:\WINDOWS\system32\RICHTX32.OCX=$(WinSysPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\RICHED32.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=$(AppPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=$(WinPath)
+C:\WINDOWS\system32\VB6STKIT.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=$(WinPath)
+C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\Client v2\CHESS_CLIENT.exe=$(AppPath)
+C:\WINDOWS\system32\scrrun.dll=$(WinSysPath)
+C:\WINDOWS\system32\msvcrt.dll=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\Client v2\settings.dat=$(AppPath)
+
+[Package|chess client|Configure Shared Files]
+Applicable=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\CLIENT\CHESS_CLIENT.exe=No
+C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\Client v2\CHESS_CLIENT.exe=No
+C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\Client v2\settings.dat=No
+
+[Package|chess client|Distribution]
+Type=single
+Size=
+Title=CHESS_CLIENT
+
+[Package|chess client|IconGroups]
+Group0=CHESS_CLIENT
+PrivateGroup0=-1
+Parent0=$(Programs)
+
+[Package|chess client|CHESS_CLIENT]
+Icon1=CHESS_CLIENT.exe
+Title1=CHESS_CLIENT
+StartIn1=$(AppPath)
+Key1=Icon1
+
+[Package|chess client|Package]
+PackageFolder=C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\Client v2\Package
+ProjectFolder=C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\Client v2
+ServerSideCab=
+File1=C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\Client v2\Package\setup.exe
+File2=C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\Client v2\Package\Setup.Lst
+File3=C:\Program Files\Microsoft Visual Studio\VB98\VBProjects\гъмъщ\Client v2\Package\CHESS_CLIENT.CAB
+Handler1=PDWizard.FolderDplySubWiz
+Handler2=PDWizard.WebPostDplySubWiz
