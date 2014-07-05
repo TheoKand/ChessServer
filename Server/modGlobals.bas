@@ -220,15 +220,15 @@ Public Sub ProcessCommand(ByVal socketindex As Integer, ByVal Command As String)
     
 End Sub
 
-'’ν η 2η παράμετρος δεν δώθηκε, τότε ενας hosting client ξεκίνησε παρτίδα και περίμενει αντίπαλο
-'Αν η 2η παράμετρος δόθηκε, τότε ενας connecting client (OpponentNick) συνδέθηκε στην παρτίδα
+'if OpponentNick is empty, a hosting client has just started a game and waiting for an opponent.
+'if OpponentNick is not empty, a connecting client has just connected to the game
 Public Sub StartNewGame(ByVal socketindex As Integer, Optional ByVal OpponentNick As String = "")
     Dim i As Integer, TheGameIndex As Integer
     
-    'Νέα παρτίδα περιμένει αντίπολο
+    'New open game waiting for opponent
     If OpponentNick = "" Then
         
-        'Βρές μια κενή θέση στο array gGames και βάλε εκεί την νέα παρτίδα
+        'Find an empty place in array gGames and put the new game there
         For i = 1 To UBound(gGames)
             If gGames(i)(gdGameStatE) = gsClosed Then
                 TheGameIndex = i
@@ -241,14 +241,14 @@ Public Sub StartNewGame(ByVal socketindex As Integer, Optional ByVal OpponentNic
             gGames(TheGameIndex) = Array("", "", "")
         End If
         
-        'Αποθήκευση της νέας παρτίδας στην μνήμη
+        'Save the new game in memory
         gGames(TheGameIndex)(gdGameStatE) = gsOpen
         gGames(TheGameIndex)(gdServerPlayer) = socketindex
         gGames(TheGameIndex)(gdClientPlayer) = ""
     
         BroadcastMessage FormatCommand(mtLobbyBroadcast, "0" & ARGUMENT_SEPERATOR & "Ο χρήστης " & gUsers(socketindex)(udNickname) & " περιμένει αντίπαλο."), True
     
-    'Ξεκίνησε το παιγνίδι ανάμεσα στους δύο παίκτες
+    'Begin the game
     Else
     
         For i = 1 To UBound(gGames)
@@ -258,7 +258,7 @@ Public Sub StartNewGame(ByVal socketindex As Integer, Optional ByVal OpponentNic
             End If
         Next
         
-        'Αλλαγή κατάστασης της παρτίδας απο Open σε Playing
+        'Change the game's state from Open to Playing
         gGames(TheGameIndex)(gdGameStatE) = gsPlaying
         gGames(TheGameIndex)(gdServerPlayer) = socketindex
         gGames(TheGameIndex)(gdClientPlayer) = GetUserIndex(OpponentNick)
@@ -269,7 +269,7 @@ Public Sub StartNewGame(ByVal socketindex As Integer, Optional ByVal OpponentNic
     
 End Sub
 
-'Επιστρέφει το SocketIndex του χρήστη με βάση το κριτήριο που δώθηκε
+'Return the socketIndex of the user based on this criteria
 Public Function GetUserIndex(Optional ByVal Nickname As String = "", Optional ByVal IP As String = "") As Integer
 
     Dim Crit As Integer, i As Integer, CritValue As String
@@ -294,7 +294,7 @@ Public Function GetUserIndex(Optional ByVal Nickname As String = "", Optional By
 
 End Function
 
-'Ένας client που είχε ξεκινήσει παρτίδα και περίμενε αντίπαλο, ακύρωσε την παρτίδα
+'A hosting client canceled the game
 Public Sub StopNewGame(ByVal socketindex As Integer)
     Dim Gameindex As Integer, i As Integer
     For i = 1 To UBound(gGames)
@@ -306,7 +306,7 @@ Public Sub StopNewGame(ByVal socketindex As Integer)
 
 End Sub
 
-'Επιστρέφει το πλήθος των χρηστών που είναι online στον server
+'Returns the number of online users
 Public Function GetOnlineUserCount() As Integer
     Dim i As Integer
     For i = 1 To UBound(gUsers)
@@ -314,7 +314,7 @@ Public Function GetOnlineUserCount() As Integer
     Next
 End Function
 
-'Επιστρέφει το πλήθος των ενεργών παρτίδων που είναι σε εξέλιξη στον server
+'REturns the number of currently open games
 Public Function GetOnlineGamesCount() As Integer
     Dim i As Integer
     For i = 1 To UBound(gGames)
@@ -322,19 +322,19 @@ Public Function GetOnlineGamesCount() As Integer
     Next
 End Function
 
-'Επιστρέφει ενα string που είναι το tcp/ip μύνημα που στέλνεται στους clients κάθε λίγο, και ενημερώνει
-'για την κατάσταση του server, δηλαδή για τους online χρήστες και τις ενεργές παρτίδες.
+'Returns the server state that is broadcasted to the clients every few seconds. This contains the
+'list of online users and online games
 Public Function GetServerState() As String
     Dim i As Integer, UsersList As String, GamesList As String
     
-    'Πάρε τους χρήστες online
+    'GEt online users
     For i = 1 To UBound(gUsers)
         If gUsers(i)(udUserState) = usConnected Then
             UsersList = UsersList & gUsers(i)(udNickname) & ARGUMENT_SEPERATOR2
         End If
     Next
     
-    'Πάρε τις ενεργές παρτίδες
+    'Get online games
     For i = 1 To UBound(gGames)
         
         If gGames(i)(gdGameStatE) = gsOpen Then
@@ -350,7 +350,7 @@ Public Function GetServerState() As String
     GetServerState = UsersList & ARGUMENT_SEPERATOR & GamesList
 End Function
 
-'Αποστολή ενός tcp/ip μυνήματος σε όλους τους clients
+'Send a message to all clients
 Public Sub BroadcastMessage(ByVal Command As String, Optional NoQueue As Boolean = False)
     Dim i As Long
     For i = 1 To UBound(gUsers)
@@ -360,7 +360,7 @@ Public Sub BroadcastMessage(ByVal Command As String, Optional NoQueue As Boolean
     Next
 End Sub
 
-'Καλείται όταν ενας client αποσυνδεθεί
+'Called when a client disconnects
 Public Function ClientDisconnected(ByVal socketindex As Integer)
     
     frmMain.SOCKET(socketindex).Close
@@ -375,7 +375,7 @@ Public Function ClientDisconnected(ByVal socketindex As Integer)
     
     Dim i As Long
     
-    'Αν ο παίκτης έπαιζε παρτίδα, ενημέρωσε τον αντίπαλο του οτι η παρτίδα έχει διακοπεί
+    'If the client was in the middle of a game, inform the other player that the game is over
     Dim OpponentIndex As Integer
     For i = 1 To UBound(gGames)
         If gGames(i)(gdServerPlayer) = socketindex And gGames(i)(gdGameStatE) = gsPlaying Then
@@ -391,7 +391,7 @@ Public Function ClientDisconnected(ByVal socketindex As Integer)
     Next
     
     
-    'Διαγραφή του listening game (αν υπάρχει) που έχει ξεκινήσει ο παίκτης
+    'Delete any open games that the client had started
     For i = 1 To UBound(gGames)
         If gGames(i)(gdServerPlayer) = socketindex Then gGames(i)(gdGameStatE) = gsClosed
     Next
@@ -399,8 +399,8 @@ Public Function ClientDisconnected(ByVal socketindex As Integer)
     
 End Function
 
-'Αποστολή ενός tcp/ip μυνήματος σε έναν συγκεκριμένο client. Ο κάθε client έχει ένα μοναδικό SocketIndex
-'που είναι το index του Winsock Control (απο το control array) που έχει κάνει την σύνδεση με αυτόν
+'Send a tcp/ip message to a specific client. Each client has a unique socketIndex which is the index of the control array
+'of the winsock control that this client is connected to.
 Public Function SendToSocket(ByVal socketindex As Integer, ByVal Command As String) As Boolean
     If frmMain.SOCKET(socketindex).State = sckConnected Then
         frmMain.SOCKET(socketindex).SendData Command
@@ -413,7 +413,7 @@ Public Function SendToSocket(ByVal socketindex As Integer, ByVal Command As Stri
     End If
 End Function
 
-'Αποστολή του server state σε όλους τους clients, μόνο αν έχει αλλάξει απο την τελευταία φορά που στάλθηκε
+'Send the server state to all clients only if it has changed since the last sending.
 Public Sub SendServerState()
     
     Static ServerState As String

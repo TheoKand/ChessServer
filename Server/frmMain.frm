@@ -1,6 +1,5 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "Mswinsck.ocx"
-Object = "{E7BC34A0-BA86-11CF-84B1-CBC2DA68BF6C}#1.0#0"; "NTSVC.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Σκάκι - SERVER"
@@ -24,16 +23,14 @@ Begin VB.Form frmMain
    ScaleWidth      =   5355
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin NTService.NTService NTService 
+   Begin VB.PictureBox NTService 
+      Height          =   480
       Left            =   1110
+      ScaleHeight     =   420
+      ScaleWidth      =   1140
+      TabIndex        =   0
       Top             =   870
-      _Version        =   65536
-      _ExtentX        =   741
-      _ExtentY        =   741
-      _StockProps     =   0
-      DisplayName     =   "Chess Server"
-      ServiceName     =   "ChessServer"
-      StartMode       =   2
+      Width           =   1200
    End
    Begin VB.Timer tmrServerState 
       Enabled         =   0   'False
@@ -67,18 +64,18 @@ Private Sub cmdClose_Click()
     Unload Me
 End Sub
 
-'Καλείται όταν αλλάζει η κατάσταση του server, δηλαδή οταν ξεκινάει ή σταματάει
+'Called when the server's state is changed, starting or ending.
 Private Function UpdateServerState(ByVal NewValue As Boolean) As Boolean
     
     Dim Result As Boolean
     
     gServerIsRunning = NewValue
     
-    ReDim gUsers(0) ' καθαρισμός του array που περιέχει τους χρήστες
-    ReDim gGames(0) ' καθαρισμός του array που περιέχει τις παρτίδες
+    ReDim gUsers(0) ' Clear the users array
+    ReDim gGames(0) ' Clear the games array
     
-    Set gOutgoing = Nothing ' καθαρισμός του FIFO queue για τα outgoing tcp/ip μυνήματα
-    Set gIncoming = Nothing ' καθαρισμός του FIFO queue για τα Incoming tcp/ip μυνήματα
+    Set gOutgoing = Nothing ' Clear the outgoing messages FIFO queue
+    Set gIncoming = Nothing ' Clear the incoming messages FIFO queue
     
     tmrIncoming.Enabled = gServerIsRunning
     tmrServerState.Enabled = gServerIsRunning
@@ -99,7 +96,7 @@ Private Function UpdateServerState(ByVal NewValue As Boolean) As Boolean
     
 End Function
 
-'Κλείσε τα ανοιχτά sockets. Αν δεν γίνει, τα ports θα μείνουν ανοιχτά
+'Close open sockets
 Private Sub CloseSockets()
     Dim i As Integer
     On Error Resume Next
@@ -111,7 +108,7 @@ Private Sub CloseSockets()
     Next
 End Sub
 
-'Ξεκίνημα του "listen" στο port .
+'Start "listening" on the designated port.
 Private Function SocketListen() As Boolean
     On Error GoTo ErrHandler
     SOCKET(0).LocalPort = SERVER_PORT
@@ -126,12 +123,12 @@ ErrHandler:
     
 End Function
 
-'Ξεκίνημα server
+'Start the server
 Private Function StartServer() As Boolean
     StartServer = UpdateServerState(True)
 End Function
 
-'Σταμάτημα server
+'Stop the server
 Private Sub StopServer()
         
     UpdateServerState False
@@ -186,9 +183,8 @@ Private Sub Form_Unload(Cancel As Integer)
     CloseSockets
 End Sub
 
-'Πάρε ενα ελεύθερο socket για να γίνει νέα σύνδεση με νέο client. Αν δεν υπάρχει ελεύθερο socket
-'(δηλαδή socket που ανήκε σε client που συνδέθηκε στο παρελθόν και τώρα έχει αποσυνδεθεί), τότε
-'φόρτωσε ένα νέο control στο control array SOCKET
+'Return an empty socket for a new client connection. If there is no free socket then load a new winsock control into
+' control arry SOCKET
 Private Function GetEmptySocket() As Integer
     Dim i As Integer, NewSocket As Integer
     For i = 1 To SOCKET.UBound
@@ -213,13 +209,13 @@ Private Sub NTService_Stop()
     StopServer
 End Sub
 
-'Το event τρέχει όταν ο client που έχει συνδεθεί σε αυτό το socket, κλείσει την σύνδεση
+'This event runs when a previously connected client closes the connection to this socket.
 Private Sub SOCKET_Close(Index As Integer)
     If SOCKET(Index).State <> sckClosing Then Exit Sub
     ClientDisconnected Index
 End Sub
 
-'Ένας client συνδέεται στον server. Βάλτον στην μνήμη με κατάσταση Connecting
+'A client has connected. Save this client in the users array with state ="connecting"
 Private Sub SOCKET_ConnectionRequest(Index As Integer, ByVal requestID As Long)
     
     Dim EmptySocket As Integer
@@ -234,22 +230,21 @@ Private Sub SOCKET_ConnectionRequest(Index As Integer, ByVal requestID As Long)
     
 End Sub
 
-'Incoming tcp/ip μύνημα
+'Incoming tcp/ip message
 Private Sub SOCKET_DataArrival(Index As Integer, ByVal bytesTotal As Long)
     Dim sData As String
-    'Διάβασε το μύνημα απο το socket
+    'Read the message from the socket
     SOCKET(Index).GetData sData, vbString
     
-    'Βάλε το μύνημα στο Queue του client ο οποίος το έστειλε
+    'Place message in client's queue
     gUsers(Index)(udUserQueue) = gUsers(Index)(udUserQueue) & sData
     
-    'Επεξεργάσου το Queue του client, ωστε αν υπάρχουν μέσα ολοκληρωμένα μυνήματα,
-    'αυτά να επεξεργαστούν, και να σβηστούν απο το queue
+    'Process queue so that if complete messages exist they are processed and removed
     gUsers(Index)(udUserQueue) = TrimIncomingCommands(Index, gUsers(Index)(udUserQueue))
     
 End Sub
 
-'Αφαίρεση ολοκληρωμένων tcp/ip μυνημάτων απο το queue και επεξεργασία τους
+'Process and remove complete messages from the queue
 Private Function TrimIncomingCommands(ByVal socketindex As Integer, ByVal UserQueue As String) As String
     Dim CommandArray As Variant, i As Integer, Command As String, NewUserQueue As String
     CommandArray = Split(UserQueue, COMMAND_SEPERATOR)
@@ -266,12 +261,12 @@ Private Function TrimIncomingCommands(ByVal socketindex As Integer, ByVal UserQu
             If Command <> "" Then
                 Command = socketindex & SOCKET_SEPERATOR & Command
                 
-                'Επεξεργάσου το μύνημα (Κάποια urgent είδη μυνημάτων δεν μπαίνουν σε queue)
+                'Process message (some urgent messages are not placed in the queue)
                 Dim IsUrgent As Boolean
-                '’ν το μύνημα είναι απάντηση client σε ping, τότε μην το βάλεις σε queue
+                'If this message is an answer to a ping then don't put it in queue
                 Dim dummy1 As String, dummy2 As String
                 dummy1 = Split(Command, SOCKET_SEPERATOR)(1)
-                dummy2 = Split(dummy1, MSG_SEPERATOR)(0) ' Τύπος μυνήματος
+                dummy2 = Split(dummy1, MSG_SEPERATOR)(0) ' type of message
 
                 Select Case dummy2
                 Case mtPong, mtID, mtConnectionRequest
@@ -295,7 +290,7 @@ Private Function TrimIncomingCommands(ByVal socketindex As Integer, ByVal UserQu
 End Function
 
 
-'Ο timer αυτός τρέχει κάθε λίγο και επεξεργάζεται τα incoming tcp/ip μυνήματα
+'THis timer processes incoming messages
 Private Sub tmrIncoming_Timer()
     Dim socketindex, Command As String, TheCommand As String
     If gIncoming.Count > 0 Then
@@ -338,14 +333,14 @@ Private Sub PingClients()
     
 End Sub
 
-'O timer αυτός τρέχει κάθε λίγο και στέλνει το server state στους clients
+'THis timer sends the server state to the clients
 Private Sub tmrServerState_Timer()
     Static counter As Integer
     SendServerState
     
     counter = counter + 1
     
-    'Κάθε 30 δευτερόλεπτα γίνεται ping σε όλους τους clients
+    'Ping all clients every 30 seconds
     If counter = 36 Then
         counter = 0
         PingClients
