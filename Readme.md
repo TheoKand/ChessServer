@@ -1,7 +1,7 @@
 ChessServer
 ===========
 
-Visual Basic 6 Chess server with Winsock
+P2P Chess server with Visual Basic 6 + Winsock
 
 This is a fully functional chess server developed by me in 2004 using Visual Basic 6 and the Winsock control (MSWINSCK.OCX)
 
